@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { UserContext } from "../UserContext";
 import Text from "../LocalizedText";
+import BackButton from "../BackButton";
 
 export default function BarcodeScanScreen() {
   const { setCurrentScreen, setProductData, t } = useContext(UserContext);
@@ -46,6 +47,7 @@ export default function BarcodeScanScreen() {
 
   return (
     <View style={styles.container}>
+      <BackButton floating dark />
       <View style={styles.scannerWrapper}>
         <Text style={styles.title}>{t("barcode")}</Text>
 
