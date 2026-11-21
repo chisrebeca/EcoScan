@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-multipart
+sqlalchemy
+psycopg[binary]
+pydantic-settings
+qrcode[pil]
+python-dotenv

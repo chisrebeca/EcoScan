@@ -1,0 +1,8 @@
+node_modules/
+.venv/
+venv/
+.expo/
+.env
+__pycache__/
+*.pyc
+backend/reclar.db
