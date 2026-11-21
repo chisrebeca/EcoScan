@@ -13,6 +13,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { UserContext } from "../UserContext";
 import Text from "../LocalizedText";
+import BackButton from "../BackButton";
 
 // Adresa backend-ului pentru testarea pe calculator
 const API_URL = "http://127.0.0.1:8000";
@@ -198,6 +199,7 @@ export default function AIScanScreen() {
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
     >
+      <BackButton />
       <Text style={styles.title}>{t("scanAi")}</Text>
 
       <Text style={styles.subtitle}>

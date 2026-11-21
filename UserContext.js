@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useMemo, useState } from "react";
+import { BackHandler } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiRequest } from "./api";
 import { translations } from "./translations";
@@ -12,7 +13,15 @@ export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [points, setPoints] = useState(0);
   const [recycledCount, setRecycledCount] = useState(0);
-  const [currentScreen, setCurrentScreen] = useState("Home");
+  // Istoricul ecranelor, pentru butonul „Înapoi” (și butonul Back de pe Android)
+  const [screenHistory, setScreenHistory] = useState(["Home"]);
+  const currentScreen = screenHistory[screenHistory.length - 1];
+  const setCurrentScreen = (screen) =>
+    setScreenHistory((history) =>
+      history[history.length - 1] === screen ? history : [...history, screen].slice(-20),
+    );
+  const goBack = () =>
+    setScreenHistory((history) => (history.length > 1 ? history.slice(0, -1) : history));
   const [productData, setProductData] = useState(null);
   const [selectedCollectionPoint, setSelectedCollectionPoint] = useState(null);
   const [activeVoucher, setActiveVoucher] = useState(null);
@@ -123,8 +132,17 @@ export const UserProvider = ({ children }) => {
     return data.email;
   };
 
+  useEffect(() => {
+    const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
+      if (screenHistory.length <= 1) return false; // pe Acasă: comportament normal
+      goBack();
+      return true;
+    });
+    return () => subscription.remove();
+  }, [screenHistory.length]);
+
   const value = useMemo(() => ({
-    user, points, recycledCount, currentScreen, setCurrentScreen, productData,
+    user, points, recycledCount, currentScreen, setCurrentScreen, goBack, productData,
     setProductData, selectedCollectionPoint, setSelectedCollectionPoint,
     activeVoucher, setActiveVoucher, redeemedVouchers, isRestoring, register, login, logout,
     language, setLanguage, t,

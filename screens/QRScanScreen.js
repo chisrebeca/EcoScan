@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { UserContext } from "../UserContext";
 import Text from "../LocalizedText";
+import BackButton from "../BackButton";
 
 // Importăm din expo-camera în mod sigur (evitând eroarea pe Web)
 let CameraView = null;
@@ -69,6 +70,7 @@ export default function QRScanScreen() {
       // Ecranul care cere explicit acordul utilizatorului pentru cameră
       return (
         <View style={styles.permissionContainer}>
+          <BackButton floating dark />
           <Text style={styles.permissionTitle}>📷 Acces la Cameră</Text>
           <Text style={styles.permissionText}>
             Această aplicație are nevoie de acces la camera foto pentru a putea
@@ -110,6 +112,7 @@ export default function QRScanScreen() {
 
   return (
     <View style={styles.container}>
+      {!isSuccess && <BackButton floating dark />}
       {!isSuccess ? (
         // Dacă suntem pe mobil și avem permisiune, pornim camera reală în spate
         Platform.OS !== "web" && CameraView ? (

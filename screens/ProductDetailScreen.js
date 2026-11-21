@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { UserContext } from "../UserContext";
 import Text from "../LocalizedText";
+import BackButton from "../BackButton";
 
 // Importul corect al imaginii din folderul "poze"
 import borcaneliaurtel from "../poze/borcaneliaurtel.jpeg";
@@ -17,6 +18,7 @@ export default function ProductDetailScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <BackButton />
       <Text style={styles.title}>{t("scanProduct")}</Text>
 
       {/* Card Principal cu Poza în Stânga (mai mare) și Detalii în Dreapta */}
